@@ -6,8 +6,6 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { User } from "../user";
 import { first } from 'rxjs/operators';
 
-
-
 interface Role {
   value: string;
   viewValue: string;
@@ -20,33 +18,48 @@ interface Role {
 })
 export class RegisterUsersComponent implements OnInit {
   
-  registerForm: FormGroup;
-  user: User;
+  user:User = <User>{email:"", password:"", role:"", username:""};
+
+  form: any = {
+    username: null,
+    email: null,
+    password: null,
+    role:null
+  };
+
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
   
 
   roles: Role[] = [
     {value: 'normal', viewValue: 'Normal'},
-    {value: 'seller', viewValue: 'Seller'},
+    {value: 'professional', viewValue: 'Professional'},
     {value: 'admin', viewValue: 'Admin'},
   ]; 
 
-  constructor(private cardService: CardService, private formBuilder: FormBuilder,private route: ActivatedRoute,
-    private router: Router) { }
-  private location: Location
-  ngOnInit() {
-    this.registerForm = new FormGroup({
-      username: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
-      role: new FormControl('')
-    });
-  
+  constructor(private cardService: CardService) { }
+  ngOnInit() {  
   }  
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(JSON.stringify(this.registerForm.value));  
-    console.warn();  
-    this.cardService.createUser(JSON.stringify(this.registerForm.value));
+    const { username, email, password, role } = this.form;
+
+    console.log(email,username,password,role);
+
+    this.user.email = email;
+    this.user.password = password;
+    this.user.username = username;
+    this.user.role = role;
+    
+    this.cardService.registerUser(this.user).subscribe(data => {
+      console.log(data);
+      this.isSuccessful = true;
+      this.isSignUpFailed = false;
+    },
+    err => {
+      this.errorMessage = err.error.message;
+      this.isSignUpFailed = true;
+    });
   }
 }

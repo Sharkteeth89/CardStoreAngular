@@ -1,40 +1,116 @@
-  <h2>Sign up to start usign us!</h2>
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">  
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Username</mat-label>
-        <input type="text" matInput formControlName="username" required class="form-control">
-    </mat-form-field>
-    </div>  
-    
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input type="text" matInput formControlName="email" required class="form-control">
-      </mat-form-field>
-    </div>
-
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input type="text" matInput formControlName="password" required class="form-control">
-      </mat-form-field>
-    </div> 
-
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Role</mat-label>
-        <mat-select formControlName="role" required class="form-control">
-          <mat-option *ngFor="let role of roles" [value]="role.value">
-            {{role.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <button type="submit" [disabled]="!registerForm.valid">Submit</button>
-
-    <p>
-      Form Status: {{ registerForm.status }}
-    </p>
+<body>
+  <div class="col-md-2">
+    <div class="card card-container">
+      <img
+        id="profile-img"
+        src="https://pbs.twimg.com/profile_images/1138193289973075968/s4U8dhpQ_400x400.png"
+        class="profile-img-card"
+      />
+      <form
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <mat-form-field appearance="fill">
+          <div class="form-group">
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              name="username"
+              [(ngModel)]="form.username"
+              required
+              placeholder="Username"
+              minlength="1"
+              maxlength="50"
+              #username="ngModel"
+            />
+            <div class="alert-danger" *ngIf="username.errors && f.submitted">
+              <div *ngIf="username.errors.required">Username is required</div>
+              <div *ngIf="username.errors.minlength">
+                Username must be at least 1 character
+              </div>
+              <div *ngIf="username.errors.maxlength">
+                Username must be at most 50 characters
+              </div>
+            </div>
+          </div>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <div class="form-group">
+              <input
+                matInput
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Email"
+                [(ngModel)]="form.email"
+                required
+                email
+                #email="ngModel"
+              />
+              <div class="alert-danger" *ngIf="email.errors && f.submitted">
+                <div *ngIf="email.errors.required">Email is required</div>
+                <div *ngIf="email.errors.email">
+                  Email must be a valid email address
+                </div>
+              </div>
+            </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <div class="form-group">
+            <input
+              matInput
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="form.password"
+              required
+              placeholder="Password"
+              minlength="4"
+              #password="ngModel"
+            />
+            <div class="alert-danger" *ngIf="password.errors && f.submitted">
+              <div *ngIf="password.errors.required">Password is required</div>
+              <div *ngIf="password.errors.minlength">
+                Password must be at least 4 characters
+              </div>
+            </div>
+          </div>
+        </mat-form-field>
   
-  </form>
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Role</mat-label>
+            <mat-select matInput
+            class="form-control"
+            name="role"
+            [(ngModel)]="form.role"
+            required
+            #role="ngModel">
+              <mat-option *ngFor="let role of roles" [value]="role.value">
+                {{role.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <div class="form-group">
+          <button mat-raised-button class="btn btn-primary btn-block">Sign Up</button>
+        </div>
+  
+        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+          Signup failed!<br />{{ errorMessage }}
+        </div>
+  
+      </form>
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+      </div>
+    </div>
+  </div>
+</body>

@@ -1,8 +1,13 @@
+h2{
+  margin-top: 10px;
+  text-align: center;
+}
 .cards {
-    margin: 0 0 2em 0;
+    margin: auto;
     list-style-type: none;
     padding: 0;
-    width: 15em;
+    padding-top: 10px;
+    width: 20em;
   }
   .cards li {
     cursor: pointer;

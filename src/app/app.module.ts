@@ -18,6 +18,7 @@ import { RoleCheckboxComponent } from './role-checkbox/role-checkbox.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { DropdownComponent } from './dropdown/dropdown.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     RegisterUsersComponent,
     RoleCheckboxComponent,
     DropdownComponent,
+    LoginComponent,
   ],
   imports: [
     HttpClientModule,

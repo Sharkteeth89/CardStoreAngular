@@ -20,6 +20,10 @@ export class CardService {
     "http://localhost/Laravel/Card_selling/public/api/card/get/card";
     
 
+  httpOptions = {
+     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
 
@@ -53,10 +57,24 @@ export class CardService {
      
   }
 
+  registerUser(user:User): Observable<User> {
+    return this.http.post<User>(this.URLuser, user, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ id=${newUser.username}`)),
+      catchError(this.handleError<User>('registerUser'))
+    );
+  }
+
+  login(username: String, password: String): Observable<any>{
+    return this.http.post<User>(this.URLuser, username, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ id=${newUser.username}`)),
+      catchError(this.handleError<User>('registerUser'))
+    );
+  }
+/*
   createUser(user: String): Observable<User>{  
     return this.http.post<User>(this.URLuser, user)
   }
-
+*/
   getCard(id: number): Observable<Card> {
     const url = `${this.cardURL}/${id}`;    
     return this.http.get<Card>(url).pipe(
