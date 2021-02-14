@@ -46,21 +46,14 @@ export class CardService {
   // every HTTTP call returns Observable object
 
   getCards(): Observable<Card[]> {
-    const headers = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/x-www-form-urlencoded",
-        'Access-Control-Allow-Origin' : 'always'
-      })
-    };
-    
-    return this.http.post<[Card]>(this.URL, { 'card_name': 'Dragon negro'}).pipe(
+      return this.http.post<[Card]>(this.URL, { 'card_name': 'Dragon negro'}).pipe(
       tap(_ => this.log('fetched cards')),
       catchError(this.handleError<Card[]>('getCards', []))
     );
      
   }
 
-  createUser(user: User){  
+  createUser(user: String): Observable<User>{  
     return this.http.post<User>(this.URLuser, user)
   }
 

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CardService } from '../card.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { User } from "../user";
+import { first } from 'rxjs/operators';
 
 
 
@@ -19,7 +21,8 @@ interface Role {
 export class RegisterUsersComponent implements OnInit {
   
   registerForm: FormGroup;
-  user: User
+  user: User;
+  
 
   roles: Role[] = [
     {value: 'normal', viewValue: 'Normal'},
@@ -27,7 +30,8 @@ export class RegisterUsersComponent implements OnInit {
     {value: 'admin', viewValue: 'Admin'},
   ]; 
 
-  constructor(private cardService: CardService, private formBuilder: FormBuilder,) { }
+  constructor(private cardService: CardService, private formBuilder: FormBuilder,private route: ActivatedRoute,
+    private router: Router) { }
   private location: Location
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -41,8 +45,8 @@ export class RegisterUsersComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.warn(this.registerForm.value);  
-    this.cardService.createUser(this.registerForm.value)
-    
+    console.warn(JSON.stringify(this.registerForm.value));  
+    console.warn();  
+    this.cardService.createUser(JSON.stringify(this.registerForm.value));
   }
 }
