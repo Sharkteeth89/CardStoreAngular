@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CardDetailComponent } from './card-detail/card-detail.component';
 import { RegisterUsersComponent } from './register-users/register-users.component';
 import { LoginComponent } from './login/login.component';
+import { CreateNewCardComponent } from './create-new-card/create-new-card.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'detail/:id', component: CardDetailComponent },
   { path: 'cards', component: CardsComponent },
   { path: 'register', component: RegisterUsersComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'newcard', component: CreateNewCardComponent }
   
 ];
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Card } from '../card';
 import { CardService } from '../card.service';
-import { MessageService } from '../message.service';
+import { TokenStorageService } from '../token-storage.service';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-cards',
@@ -12,16 +13,30 @@ export class CardsComponent implements OnInit {
   cards: Card[];
 
 
-  constructor(private cardService: CardService) {}
+  constructor(private cardService: CardService, private tokenStrorage: TokenStorageService, private router: Router) {}
  
 
   //Similar to viewDidLoad or onCreate
   ngOnInit() {
-  this.getCards();
-}
 
-getCards(): void {
-  this.cardService.getCards().subscribe(cards => this.cards = cards);
-}
+    if (this.tokenStrorage.getToken() != null) {
+      this.getCards();
+    }else{
+      this.router.navigate(['/login']);
+    }
+  this.getCards();
+  }
+
+  ngOnDestroy(): void{
+    this.reloadPage();
+  }
+
+  getCards(): void {
+    this.cardService.getCards().subscribe(cards => this.cards = cards);
+  }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
 
 }

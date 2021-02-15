@@ -19,6 +19,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { LoginComponent } from './login/login.component';
+import { CreateNewCardComponent } from './create-new-card/create-new-card.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { LoginComponent } from './login/login.component';
     RoleCheckboxComponent,
     DropdownComponent,
     LoginComponent,
+    CreateNewCardComponent,
   ],
   imports: [
     HttpClientModule,

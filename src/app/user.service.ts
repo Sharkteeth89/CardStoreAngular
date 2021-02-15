@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Card } from "./card";
 import { Observable, of } from "rxjs";
 import { MessageService } from "./message.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -14,9 +13,7 @@ export class UserService {
   // URL which returns list of JSON items (API end-point URL)
   
     private readonly URL =
-    "http://localhost/Laravel/Card_selling/public/api/user";
-
-    
+    "http://localhost/Laravel/Card_selling/public/api/user";    
 
   httpOptions = {
      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -41,9 +38,6 @@ export class UserService {
   }
 
   constructor(private http: HttpClient, private messageService: MessageService) {}
-  // create a method named: resolveItems()
-  // this method returns list-of-items in form of Observable
-  // every HTTTP call returns Observable object
 
   registerUser(user:User): Observable<User> {
     return this.http.post<User>(this.URL + '/signup', user, this.httpOptions).pipe(
@@ -53,9 +47,9 @@ export class UserService {
   }
 
   login(username: String, password: String): Observable<any>{
-    return this.http.post<User>(this.URL + '/login', {username, password}, this.httpOptions).pipe(
+    return this.http.post(this.URL + '/login', {username, password}, this.httpOptions).pipe(
       tap((newUser: User) => this.log(`added user w/ id=${newUser.username}`)),
-      catchError(this.handleError<User>('registerUser'))
-    );
-  }
+      catchError(this.handleError<User>('login')),
+    )
+  } 
 }

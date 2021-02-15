@@ -4,7 +4,7 @@ import { Observable, of } from "rxjs";
 import { MessageService } from "./message.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap } from 'rxjs/operators';
-import { User } from "./user";
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: "root"
@@ -16,7 +16,7 @@ export class CardService {
         
 
   httpOptions = {
-     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -37,17 +37,16 @@ export class CardService {
     this.messageService.add(`HeroService: ${message}`);
   }
 
-  constructor(private http: HttpClient, private messageService: MessageService) {}
+  constructor(private http: HttpClient, private messageService: MessageService, private tokenStorage : TokenStorageService) {}
   // create a method named: resolveItems()
   // this method returns list-of-items in form of Observable
   // every HTTTP call returns Observable object
 
   getCards(): Observable<Card[]> {
-      return this.http.post<[Card]>(this.URL + '/list', { 'card_name': 'Dragon negro'}).pipe(
+      return this.http.get<[Card]>(this.URL + '/list').pipe(
       tap(_ => this.log('fetched cards')),
       catchError(this.handleError<Card[]>('getCards', []))
-    );
-     
+    );     
   }
 
   getCard(id: number): Observable<Card> {
@@ -55,6 +54,21 @@ export class CardService {
     return this.http.get<Card>(url).pipe(
       tap(_ => this.log(`fetched card id=${id}`)),
       catchError(this.handleError<Card>(`getCard id=${id}`))
-  );
+    );
   }
+
+  createCard(card_name: String, card_description: String): Observable<any> {
+    const token = this.tokenStorage.getToken();
+    console.warn(token);
+    this. httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json',
+                                  'api_token': token})
+    };
+    return this.http.post(this.URL + '/create', {card_name, card_description}, this.httpOptions).pipe(
+      tap((newCard: Card) => this.log(`added card w/ id=${newCard.name}`)),
+      catchError(this.handleError<Card>('createCard'))
+    );
+  }
+
+  
 }

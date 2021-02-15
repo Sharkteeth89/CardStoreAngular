@@ -1,9 +1,11 @@
 <mat-toolbar color="primary" class="bar">
   <nav>
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/cards">Cards</a>
-    <a routerLink="/register">Register</a>
-    <a routerLink="/login">Login</a>
+    <a routerLink="/register" *ngIf="isNotLoggedIn">Register</a>
+    <a routerLink="/login" *ngIf="isNotLoggedIn">Login</a>
+    <a routerLink="/dashboard" *ngIf="isLoggedIn">Dashboard</a>
+    <a routerLink="/cards" *ngIf="isLoggedIn">Cards</a>
+    <a routerLink="/newcard" *ngIf="isLoggedIn && isAdmin">Add new card</a>
+    <button (click)="logOut()" mat-raised-button color="warn" *ngIf="isLoggedIn">Log out</button>
   </nav>
 </mat-toolbar>
 

@@ -47,6 +47,13 @@ h4 {
 .grid-pad > [class*='col-']:last-of-type {
   padding-right: 20px;
 }
+.logout{
+  margin: auto;
+  text-align: center;
+}
+button{
+  margin-top: 150px;
+}
 @media (max-width: 600px) {
   .module {
     font-size: 10px;

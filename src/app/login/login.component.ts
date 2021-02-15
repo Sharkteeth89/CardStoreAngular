@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { TokenStorageService } from '../token-storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -19,23 +22,26 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private userService: UserService, private tokenStorage: TokenStorageService) { }
+  constructor(private userService: UserService, private tokenStorage: TokenStorageService, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
+    this.openSnackBar();    
+    if (this.tokenStorage.getToken() != null) {
+      this.router.navigate(['/dashboard']);
+    }    
   }
 
-  
   onSubmit(): void {
     const { username, password } = this.form;
 
-    
     this.userService.login(username, password).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUser(data);
-
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
+        if(data!='700' && data!='600'){
+          this.tokenStorage.saveToken(data);
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          this.reloadPage();
+        }        
       },
       err => {
         this.errorMessage = err.error.message;
@@ -47,5 +53,11 @@ export class LoginComponent implements OnInit {
   reloadPage(): void {
     window.location.reload();
   } 
+
+  openSnackBar() {
+    this.snackBar.open("Log in please", "OK", {
+      duration: 2000,
+    });
+  }
 
 }
