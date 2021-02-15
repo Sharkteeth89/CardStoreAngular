@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CardService } from '../card.service';
+import { UserService } from '../user.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { User } from "../user";
 import { first } from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class RegisterUsersComponent implements OnInit {
     {value: 'admin', viewValue: 'Admin'},
   ]; 
 
-  constructor(private cardService: CardService) { }
+  constructor(private userService: UserService) { }
   ngOnInit() {  
   }  
 
@@ -52,7 +52,7 @@ export class RegisterUsersComponent implements OnInit {
     this.user.username = username;
     this.user.role = role;
     
-    this.cardService.registerUser(this.user).subscribe(data => {
+    this.userService.registerUser(this.user).subscribe(data => {
       console.log(data);
       this.isSuccessful = true;
       this.isSignUpFailed = false;

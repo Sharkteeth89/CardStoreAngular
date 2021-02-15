@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Card } from "./card";
 import { Observable, of } from "rxjs";
 import { MessageService } from "./message.service";
@@ -7,13 +7,16 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { User } from "./user";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class CardService {
+export class UserService {
+
   // URL which returns list of JSON items (API end-point URL)
-  private readonly URL =
-    "http://localhost/Laravel/Card_selling/public/api/card";
-        
+  
+    private readonly URL =
+    "http://localhost/Laravel/Card_selling/public/api/user";
+
+    
 
   httpOptions = {
      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -33,7 +36,7 @@ export class CardService {
     };
   }
 
-  private log(message: string) {
+ private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
 
@@ -42,19 +45,17 @@ export class CardService {
   // this method returns list-of-items in form of Observable
   // every HTTTP call returns Observable object
 
-  getCards(): Observable<Card[]> {
-      return this.http.post<[Card]>(this.URL + '/list', { 'card_name': 'Dragon negro'}).pipe(
-      tap(_ => this.log('fetched cards')),
-      catchError(this.handleError<Card[]>('getCards', []))
+  registerUser(user:User): Observable<User> {
+    return this.http.post<User>(this.URL + '/signup', user, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ id=${newUser.username}`)),
+      catchError(this.handleError<User>('registerUser'))
     );
-     
   }
 
-  getCard(id: number): Observable<Card> {
-    const url = `${this.URL + '/get/card'}/${id}`;    
-    return this.http.get<Card>(url).pipe(
-      tap(_ => this.log(`fetched card id=${id}`)),
-      catchError(this.handleError<Card>(`getCard id=${id}`))
-  );
+  login(username: String, password: String): Observable<any>{
+    return this.http.post<User>(this.URL + '/login', {username, password}, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ id=${newUser.username}`)),
+      catchError(this.handleError<User>('registerUser'))
+    );
   }
 }

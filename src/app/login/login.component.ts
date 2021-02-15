@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CardService } from '../card.service';
+import { UserService } from '../user.service';
+import { TokenStorageService } from '../token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private cardService: CardService,) { }
+  constructor(private userService: UserService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
   }
@@ -28,15 +29,13 @@ export class LoginComponent implements OnInit {
     const { username, password } = this.form;
 
     
-    this.cardService.login(username, password).subscribe(
+    this.userService.login(username, password).subscribe(
       data => {
-        //this.tokenStorage.saveToken(data.accessToken);
-        //this.tokenStorage.saveUser(data);
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveUser(data);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        //this.roles = this.tokenStorage.getUser().roles;
-        this.reloadPage();
       },
       err => {
         this.errorMessage = err.error.message;
