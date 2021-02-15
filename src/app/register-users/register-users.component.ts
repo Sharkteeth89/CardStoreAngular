@@ -35,10 +35,9 @@ export class RegisterUsersComponent implements OnInit {
   roles: Role[] = [
     {value: 'normal', viewValue: 'Normal'},
     {value: 'professional', viewValue: 'Professional'},
-    {value: 'admin', viewValue: 'Admin'},
   ]; 
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
   ngOnInit() {  
   }  
 
@@ -56,6 +55,7 @@ export class RegisterUsersComponent implements OnInit {
       console.log(data);
       this.isSuccessful = true;
       this.isSignUpFailed = false;
+      this.router.navigate(['/dashboard']);
     },
     err => {
       this.errorMessage = err.error.message;
