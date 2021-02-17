@@ -36,11 +36,16 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(username, password).subscribe(
       data => {
-        if(data!='700' && data!='600'){
+        if(data !='User not found' && data != 'User or password incorrect'){
+          console.warn(data);
           this.tokenStorage.saveToken(data);
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.reloadPage();
+        }else{
+          this.snackBar.open("User or password incorrect, try again", "OK", {
+            duration: 2000,
+          });
         }        
       },
       err => {
