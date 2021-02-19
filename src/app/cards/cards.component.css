@@ -1,9 +1,14 @@
 h2{
   margin-top: 10px;
   text-align: center;
+  font-size: 2em;
+  color:  black;
+  font-weight: 400;
+  text-shadow: 0 1px 2px gray;
 }
 .cards {
     margin: auto;
+    font-size: large;
     list-style-type: none;
     padding: 0;
     padding-top: 10px;
@@ -36,7 +41,7 @@ h2{
     display: inline-block;
     font-size: small;
     color: white;
-    padding: 0.8em 0.7em 0 0.7em;
+    padding: 1.2em 1em 0 1em;
     background-color: #3f51b5;
     line-height: 1em;
     position: relative;
@@ -46,10 +51,10 @@ h2{
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
   }
+
   a{
     text-decoration: none;
     color: #3f51b5;
-
   }
   a:hover{
     color: #3f51b5;

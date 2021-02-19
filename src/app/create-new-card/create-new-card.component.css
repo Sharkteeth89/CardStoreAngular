@@ -5,3 +5,12 @@ img{
 body{
     text-align: center;
 }
+.mat-form-field{
+    width: 250px;
+    font-size: medium;
+}
+button{
+    padding: 5px 10px 5px 10px;
+    font-size: medium;
+    width: 100px;
+}

@@ -1,7 +1,16 @@
 img{
     margin-bottom: 10px;
-    width: 150px;
+    width: 200px;
 }
 body{
     text-align: center;
+}
+.mat-form-field{
+    width: 250px;
+    font-size: medium;
+}
+button{
+    padding: 5px 10px 5px 10px;
+    font-size: medium;
+    width: 100px;
 }
