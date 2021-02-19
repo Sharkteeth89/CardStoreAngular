@@ -14,7 +14,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CardSearchComponent } from './card-search/card-search.component'; // <-- NgModel lives here
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterUsersComponent } from './register-users/register-users.component';
-import { RoleCheckboxComponent } from './role-checkbox/role-checkbox.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { DropdownComponent } from './dropdown/dropdown.component';
@@ -31,7 +30,6 @@ import { CreateNewCardComponent } from './create-new-card/create-new-card.compon
     DashboardComponent,
     CardSearchComponent,   
     RegisterUsersComponent,
-    RoleCheckboxComponent,
     DropdownComponent,
     LoginComponent,
     CreateNewCardComponent,

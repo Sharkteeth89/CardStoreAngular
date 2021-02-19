@@ -24,7 +24,6 @@ export class CardsComponent implements OnInit {
     }else{
       this.router.navigate(['/login']);
     }
-  this.getCards();
   }
 
   ngOnDestroy(): void{

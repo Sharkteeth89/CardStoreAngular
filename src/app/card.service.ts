@@ -60,7 +60,7 @@ export class CardService {
   createCard(card_name: String, card_description: String): Observable<any> {
     const token = this.tokenStorage.getToken();
     console.warn(token);
-    this. httpOptions = {
+    this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json',
                                   'api_token': token})
     };
